@@ -9,6 +9,7 @@
 *.iws
 .idea/
 .out
+.bin
 #Geany project file
 .geany
 
