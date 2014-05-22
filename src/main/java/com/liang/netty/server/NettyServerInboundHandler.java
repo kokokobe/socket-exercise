@@ -9,7 +9,7 @@ import java.net.InetAddress;
 import java.nio.charset.Charset;
 
 @Sharable
-public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
+public class NettyServerInboundHandler extends SimpleChannelInboundHandler<String> {
     @Override
     public void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
         // 收到消息直接打印输出

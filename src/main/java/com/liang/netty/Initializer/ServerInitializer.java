@@ -1,6 +1,6 @@
 package com.liang.netty.Initializer;
 
-import com.liang.netty.server.NettyServerHandler;
+import com.liang.netty.server.NettyServerInboundHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -22,6 +22,6 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast("decoder", new StringDecoder());
         pipeline.addLast("encoder", new StringEncoder());
         // 自己的逻辑Handler
-        pipeline.addLast("handler", new NettyServerHandler());
+        pipeline.addLast("handler", new NettyServerInboundHandler());
     }
 }
