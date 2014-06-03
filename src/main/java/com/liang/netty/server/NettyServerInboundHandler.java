@@ -1,9 +1,13 @@
 package com.liang.netty.server;
 
 
-import io.netty.buffer.*;
-import io.netty.channel.*;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.net.InetAddress;
 import java.nio.charset.Charset;
@@ -15,12 +19,12 @@ public class NettyServerInboundHandler extends SimpleChannelInboundHandler<Strin
         // 收到消息直接打印输出
         System.out.println(ctx.channel().remoteAddress() + " Say : " + msg);
         // 返回客户端消息 - 我已经接收到了你的消息
-        ctx.writeAndFlush("Received your message !\n").addListener(new ChannelFutureListener() {
+        ctx.writeAndFlush("Received your message !").addListener(new ChannelFutureListener() {
             @Override
             public void operationComplete(ChannelFuture future) throws Exception {
-                if(future.isSuccess()){
+                if (future.isSuccess()) {
                     System.out.println("Write Successful");
-                }else {
+                } else {
                     System.out.println("Write Error");
                     future.cause().printStackTrace();
                 }
@@ -41,7 +45,7 @@ public class NettyServerInboundHandler extends SimpleChannelInboundHandler<Strin
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("client address : "+ctx.channel().remoteAddress());
-        ctx.writeAndFlush( "Welcome to " + InetAddress.getLocalHost().getHostName() + " service!\n");
+        ctx.writeAndFlush( "Welcome to " + InetAddress.getLocalHost().getHostName() + " service!");
         /*super.channelActive(ctx);*/
         /**
          * 通过slice截取一部分ByteBuf来修改其中的内容会共享在原有的buf中

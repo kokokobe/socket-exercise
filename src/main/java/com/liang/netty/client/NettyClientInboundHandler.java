@@ -1,7 +1,5 @@
 package com.liang.netty.client;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -13,7 +11,7 @@ public class NettyClientInboundHandler extends SimpleChannelInboundHandler<Strin
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         ctx.writeAndFlush(Unpooled.copiedBuffer("Netty Rocks!",CharsetUtil.UTF_8));
-        ctx.writeAndFlush("hello this is BriLiang\r\n");
+        ctx.writeAndFlush("hello this is BriLiang");
     }
 
     @Override
