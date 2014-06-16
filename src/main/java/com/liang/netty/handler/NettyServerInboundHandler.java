@@ -1,4 +1,4 @@
-package com.liang.netty.server;
+package com.liang.netty.handler;
 
 
 import io.netty.buffer.ByteBuf;

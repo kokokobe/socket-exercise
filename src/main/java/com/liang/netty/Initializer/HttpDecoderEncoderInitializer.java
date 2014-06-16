@@ -3,10 +3,7 @@ package com.liang.netty.Initializer;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
-import io.netty.handler.codec.http.HttpRequestDecoder;
-import io.netty.handler.codec.http.HttpRequestEncoder;
-import io.netty.handler.codec.http.HttpResponseDecoder;
-import io.netty.handler.codec.http.HttpResponseEncoder;
+import io.netty.handler.codec.http.*;
 
 /**
  * @author BriLiang(liangwen.liang@vipshop.com)
@@ -32,5 +29,6 @@ public class HttpDecoderEncoderInitializer extends ChannelInitializer<Channel>{
             pipeline.addLast("decoder",new HttpRequestDecoder());
             pipeline.addLast("encoder",new HttpResponseEncoder());
         }
+        pipeline.addLast("aggegator",new HttpObjectAggregator(512*1024));
     }
 }

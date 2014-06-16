@@ -1,4 +1,4 @@
-package com.liang.netty.client;
+package com.liang.netty.handler;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler.Sharable;

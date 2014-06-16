@@ -1,6 +1,6 @@
 package com.liang.netty.Initializer;
 
-import com.liang.netty.server.NettyServerInboundHandler;
+import com.liang.netty.handler.NettyServerInboundHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
