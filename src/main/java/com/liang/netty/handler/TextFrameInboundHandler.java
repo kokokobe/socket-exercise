@@ -9,9 +9,10 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
  * @Description:(WebSocket 处理字符串handler)
  * @date 2014/6/16.
  */
-public class TextFrameHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>{
+public class TextFrameInboundHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>{
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
-        System.out.println(msg.toString());
+        System.out.println(msg.text());
+        ctx.writeAndFlush("Hello this is Netty WebSocket Server");
     }
 }
