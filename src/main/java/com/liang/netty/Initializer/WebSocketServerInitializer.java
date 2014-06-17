@@ -3,7 +3,6 @@ package com.liang.netty.Initializer;
 import com.liang.netty.handler.BinaryFrameHandler;
 import com.liang.netty.handler.ContinuationFrameHandler;
 import com.liang.netty.handler.TextFrameInboundHandler;
-import com.liang.netty.handler.TextFrameOutboundHandler;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.handler.codec.http.HttpObjectAggregator;
