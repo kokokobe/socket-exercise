@@ -6,7 +6,7 @@ import io.netty.handler.codec.LineBasedFrameDecoder;
 
 /**
  * @author BriLiang(liangwen.liang@vipshop.com)
- * @Description:(delimite ByteBuf Message using line base)
+ * @Description:(delimite ByteBuf Message using line base "\r\n")
  * @date 2014/6/17.
  */
 public class LineBasedHandlerInitializer extends ChannelInitializer<Channel> {

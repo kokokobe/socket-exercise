@@ -10,7 +10,7 @@
         socket = new WebSocket("ws://localhost:8080/websocket");
         socket.onmessage = function(event) {
             var ta = document.getElementById('responseText');
-            ta.value = ta.value + '\n' + event.data
+            ta.value =event.data+"--->data length:"+event.data.length;
         };
         socket.onopen = function(event) {
             var ta = document.getElementById('responseText');
@@ -18,7 +18,11 @@
         };
         socket.onclose = function(event) {
             var ta = document.getElementById('responseText');
-            ta.value = ta.value + "Web Socket closed";
+            ta.value ="Web Socket closed";
+        };
+        socket.error=function(event){
+            var ta=document.getElementById("responseText");
+            ta.value=event.data;
         };
     } else {
         alert("Your browser does not support Web Socket.");
