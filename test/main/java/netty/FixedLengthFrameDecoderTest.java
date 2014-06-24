@@ -41,7 +41,7 @@ public class FixedLengthFrameDecoderTest {
         Assert.assertFalse(channel.writeInbound(input.readBytes(2)));
         Assert.assertTrue(channel.writeInbound(input.readBytes(7)));
         /**
-         * write finish
+         * mark as write finish
          */
         Assert.assertTrue(channel.finish());
         Assert.assertEquals(buf.readBytes(3), channel.readInbound());
