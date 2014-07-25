@@ -15,8 +15,8 @@ import java.net.InetSocketAddress;
  * @author BriLiang(liangwen.liang@vipshop.com)
  * @version 1.0
  * @ClassName: EchoServer
- * @Description:(netty������)
- * @date 2014��4��29��
+ * @Description:(netty开发服务器端)
+ * @date 2014/7/25
  */
 public class NettyEchoServer {
     private int port;

@@ -10,6 +10,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>4.8.2</junit.version>
+        <netty.version>4.0.21.Final</netty.version>
 	</properties>
 	<build>
 		<finalName>socket-exercise</finalName>
@@ -46,7 +47,7 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.0.19.Final</version>
+            <version>${netty.version}</version>
         </dependency>
         <!-- junit 4 -->
         <dependency>
