@@ -21,7 +21,7 @@ public class FixedLengthFrameDecoderTest {
         }
         ByteBuf input=buf.duplicate();
         EmbeddedChannel channel=new EmbeddedChannel(new FixedLengthFrameDecoder(3));
-        Assert.assertTrue(channel.writeInbound(input));
+        Assert.assertTrue(channel.writeInbound(input.readBytes(9)));
         //mark write finish
         Assert.assertTrue(channel.finish());
         //read message

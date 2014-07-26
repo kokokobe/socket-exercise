@@ -6,14 +6,14 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.net.InetAddress;
 import java.nio.charset.Charset;
 
 @Sharable
-public class NettyServerInboundHandler extends SimpleChannelInboundHandler<String> {
+public class NettyServerInboundHandler extends ChannelHandlerAdapter{
 /*    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         // 收到消息直接打印输出
@@ -40,7 +40,7 @@ public class NettyServerInboundHandler extends SimpleChannelInboundHandler<Strin
     }
 
     @Override
-    protected void messageReceived(ChannelHandlerContext ctx, String msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         // 收到消息直接打印输出
         System.out.println(ctx.channel().remoteAddress() + " Say : " + msg);
         // 返回客户端消息 - 我已经接收到了你的消息
@@ -56,8 +56,12 @@ public class NettyServerInboundHandler extends SimpleChannelInboundHandler<Strin
             }
         });
         System.out.println("channel doesn't close flag：" + ctx.channel().isOpen());
-
     }
+/*    @Override
+    protected void messageReceived(ChannelHandlerContext ctx, String msg) throws Exception {
+
+
+    }*/
 
     /*    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -68,12 +72,12 @@ public class NettyServerInboundHandler extends SimpleChannelInboundHandler<Strin
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         ctx.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
     }
-
+    */
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         cause.printStackTrace();
         ctx.close();
-    }*/
+    }
 
 }
  
