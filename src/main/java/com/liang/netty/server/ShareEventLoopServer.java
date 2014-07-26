@@ -22,13 +22,6 @@ public class ShareEventLoopServer {
         bootstrap.channel(NioServerSocketChannel.class);
         bootstrap.childHandler(new SimpleChannelInboundHandler<ByteBuf>() {
             ChannelFuture future;
-            @Override
-            protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
-                if(future.isDone()){
-                    System.out.println("get data is done");
-                }
-            }
-
             /**
              *  connect to other server to get data ,so that bootstrap a client to connect
              *  share EventLoop and then no need to switch thread EventLoop
@@ -41,9 +34,9 @@ public class ShareEventLoopServer {
                 Bootstrap clientBootstrap=new Bootstrap();
                 clientBootstrap.channel(NioSocketChannel.class).handler(new SimpleChannelInboundHandler<ByteBuf>() {
                     @Override
-                    protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
+                    protected void messageReceived(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf) throws Exception {
                         System.out.println("Receive Data");
-                        msg.clear();
+                        byteBuf.clear();
                     }
                 });
                 /**
@@ -51,6 +44,13 @@ public class ShareEventLoopServer {
                  */
                 clientBootstrap.group(ctx.channel().eventLoop());
                 future=clientBootstrap.connect(new InetSocketAddress("http://vip.com", 80));
+            }
+
+            @Override
+            protected void messageReceived(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf) throws Exception {
+                if(future.isDone()){
+                    System.out.println("get data is done");
+                }
             }
         });
         ChannelFuture future=bootstrap.bind(new InetSocketAddress(8080));

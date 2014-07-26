@@ -32,7 +32,7 @@ public class MarshallingInitializer extends ChannelInitializer<Channel>{
 
     private class ObjectHandler extends SimpleChannelInboundHandler<Serializable>{
         @Override
-        protected void channelRead0(ChannelHandlerContext ctx, Serializable msg) throws Exception {
+        protected void messageReceived(ChannelHandlerContext channelHandlerContext, Serializable serializable) throws Exception {
 
         }
     }

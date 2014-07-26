@@ -13,16 +13,16 @@ public class NettyClientInboundHandler extends SimpleChannelInboundHandler<Strin
         ctx.writeAndFlush(Unpooled.copiedBuffer("Netty Rocks!",CharsetUtil.UTF_8));
         ctx.writeAndFlush("hello this is BriLiang");
     }
-
-    @Override
-    public void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-        System.out.println("Client received: "+msg);
-    }
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         System.out.println("catch a eception and close handler");
         cause.printStackTrace();
         ctx.close();
+    }
+
+    @Override
+    protected void messageReceived(ChannelHandlerContext channelHandlerContext, String msg) throws Exception {
+        System.out.println("Client received: "+msg);
     }
 }
  

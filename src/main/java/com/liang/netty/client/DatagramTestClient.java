@@ -21,8 +21,8 @@ public class DatagramTestClient {
         bootstrap.group(new OioEventLoopGroup()).channel(OioDatagramChannel.class);
         bootstrap.handler(new SimpleChannelInboundHandler<ByteBuf>() {
             @Override
-            protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
-                //TODO something to read
+            protected void messageReceived(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf) throws Exception {
+
             }
         });
         ChannelFuture future=bootstrap.bind(new InetSocketAddress(0));

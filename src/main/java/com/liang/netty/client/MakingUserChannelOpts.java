@@ -19,7 +19,7 @@ import java.net.InetSocketAddress;
  * Description(Example:IllegalStateException thrown due to invalid configuration)
  */
 public class MakingUserChannelOpts {
-    private final AttributeKey<Integer> id=new AttributeKey<>("ID");
+    private final AttributeKey<Integer> id=AttributeKey.valueOf("ID");
     public void start(){
         Bootstrap bootstrap=new Bootstrap();
         bootstrap.group(new NioEventLoopGroup()).channel(NioSocketChannel.class);
@@ -29,14 +29,13 @@ public class MakingUserChannelOpts {
                 super.channelRegistered(ctx);
                 Integer value=ctx.channel().attr(id).get();
             }
-
             @Override
-            protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
+            protected void messageReceived(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf) throws Exception {
                 System.out.println("Receive Data:");
-                while (msg.isReadable()) {
-                    System.out.print(msg.readByte());
+                while (byteBuf.isReadable()) {
+                    System.out.print(byteBuf.readByte());
                 }
-                msg.clear();
+                byteBuf.clear();
             }
         });
         bootstrap.option(ChannelOption.SO_KEEPALIVE,true).option(ChannelOption.CONNECT_TIMEOUT_MILLIS,5000);
@@ -44,7 +43,6 @@ public class MakingUserChannelOpts {
         ChannelFuture future=bootstrap.connect(new InetSocketAddress("www.vip.com", 80));
         future.syncUninterruptibly();
     }
-
     public static void main(String[] args) {
         new MakingUserChannelOpts().start();
     }

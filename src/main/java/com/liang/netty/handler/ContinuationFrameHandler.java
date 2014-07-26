@@ -12,7 +12,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
  */
 public class ContinuationFrameHandler extends SimpleChannelInboundHandler<ContinuationWebSocketFrame> {
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, ContinuationWebSocketFrame msg) throws Exception {
+    protected void messageReceived(ChannelHandlerContext channelHandlerContext, ContinuationWebSocketFrame msg) throws Exception {
         System.out.println(msg.toString());
     }
 }

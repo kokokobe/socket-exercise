@@ -18,11 +18,6 @@ import java.io.FileInputStream;
  */
 public class BinaryFrameHandler extends SimpleChannelInboundHandler<BinaryWebSocketFrame> {
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, BinaryWebSocketFrame msg) throws Exception {
-
-    }
-
-    @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
         //TODO want to send a file binary data
@@ -33,5 +28,10 @@ public class BinaryFrameHandler extends SimpleChannelInboundHandler<BinaryWebSoc
         byteBuf.writeBytes("叼死你".getBytes());
         BinaryWebSocketFrame resultFileData=new BinaryWebSocketFrame(byteBuf);
         ctx.writeAndFlush(resultFileData);*/
+    }
+
+    @Override
+    protected void messageReceived(ChannelHandlerContext channelHandlerContext, BinaryWebSocketFrame binaryWebSocketFrame) throws Exception {
+
     }
 }

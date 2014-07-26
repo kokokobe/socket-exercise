@@ -14,26 +14,6 @@ import java.nio.charset.Charset;
 
 @Sharable
 public class NettyServerInboundHandler extends SimpleChannelInboundHandler<String> {
-    @Override
-    public void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-        // 收到消息直接打印输出
-        System.out.println(ctx.channel().remoteAddress() + " Say : " + msg);
-        // 返回客户端消息 - 我已经接收到了你的消息
-        ctx.writeAndFlush("Received your message !").addListener(new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture future) throws Exception {
-                if (future.isSuccess()) {
-                    System.out.println("Write Successful");
-                } else {
-                    System.out.println("Write Error");
-                    future.cause().printStackTrace();
-                }
-            }
-        });
-        System.out.println("channel doesn't close flag：" + ctx.channel().isOpen());
-
-    }
-
 /*    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         // 收到消息直接打印输出
@@ -57,6 +37,26 @@ public class NettyServerInboundHandler extends SimpleChannelInboundHandler<Strin
         buf.setByte(0,(byte)'j');
         assert buf.getByte(0)==sliced.getByte(0);
         System.out.println("断言成功:"+(buf.getByte(0)==sliced.getByte(0)));
+    }
+
+    @Override
+    protected void messageReceived(ChannelHandlerContext ctx, String msg) throws Exception {
+        // 收到消息直接打印输出
+        System.out.println(ctx.channel().remoteAddress() + " Say : " + msg);
+        // 返回客户端消息 - 我已经接收到了你的消息
+        ctx.writeAndFlush("Received your message !").addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) throws Exception {
+                if (future.isSuccess()) {
+                    System.out.println("Write Successful");
+                } else {
+                    System.out.println("Write Error");
+                    future.cause().printStackTrace();
+                }
+            }
+        });
+        System.out.println("channel doesn't close flag：" + ctx.channel().isOpen());
+
     }
 
     /*    @Override

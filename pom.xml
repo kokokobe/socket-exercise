@@ -10,7 +10,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>4.8.2</junit.version>
-        <netty.version>4.0.21.Final</netty.version>
+        <netty.version>5.0.0.Alpha1</netty.version>
 	</properties>
 	<build>
 		<finalName>socket-exercise</finalName>
@@ -56,6 +56,11 @@
             <version>${junit.version}</version>
             <!-- 打包时不使用 <scope>test</scope> -->
         </dependency>
-	</dependencies>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty</artifactId>
+            <version>4.0.0.Alpha8</version>
+        </dependency>
+    </dependencies>
 
 </project>

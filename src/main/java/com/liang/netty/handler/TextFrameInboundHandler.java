@@ -22,10 +22,9 @@ import java.io.FileInputStream;
  */
 public class TextFrameInboundHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
+    protected void messageReceived(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
         System.out.println(msg.text());
         TextWebSocketFrame resultText = new TextWebSocketFrame("BriLiang Server Echo: " + msg.text());
         ctx.writeAndFlush(resultText);
-
     }
 }

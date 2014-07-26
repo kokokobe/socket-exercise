@@ -39,8 +39,8 @@ public class CmdHandlerInitializer extends ChannelInitializer<Channel> {
 
     private class CmdHandler extends SimpleChannelInboundHandler<Channel> {
         @Override
-        protected void channelRead0(ChannelHandlerContext ctx, Channel msg) throws Exception {
-            //do something
+        protected void messageReceived(ChannelHandlerContext channelHandlerContext, Channel channel) throws Exception {
+
         }
     }
 

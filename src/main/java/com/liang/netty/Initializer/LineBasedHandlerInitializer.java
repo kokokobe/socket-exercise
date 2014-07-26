@@ -19,8 +19,8 @@ public class LineBasedHandlerInitializer extends ChannelInitializer<Channel> {
 
     private class FrameHandler extends SimpleChannelInboundHandler<ByteBuf> {
         @Override
-        protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
-            //do something with the frame
+        protected void messageReceived(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf) throws Exception {
+
         }
     }
 }
