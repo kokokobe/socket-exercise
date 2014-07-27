@@ -19,6 +19,6 @@ public class IdleStateHandlerInitializer extends ChannelInitializer<Channel>{
     protected void initChannel(Channel ch) throws Exception {
         ChannelPipeline pipeline=ch.pipeline();
         pipeline.addLast(new IdleStateHandler(0,0,60, TimeUnit.SECONDS));
-        pipeline.addLast(new HeartbeatHandler());
+        /*pipeline.addLast(new HeartbeatHandler());*/
     }
 }

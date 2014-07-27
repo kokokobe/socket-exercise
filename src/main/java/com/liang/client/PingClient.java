@@ -92,9 +92,7 @@ public class PingClient {
      *
      * @Title: registerTargets
      * @Description:(取出队列注册链接socketChannel，向Selector注册连接就绪事件，Connector线程会调用此方法)
-     * @param
      * @return 返回类型 void
-     * @throws
      */
     public void registerTargets() {
         synchronized (targets) {
@@ -119,9 +117,7 @@ public class PingClient {
      *
      * @Title: processSelectedKeys
      * @Description:(处理连接就绪事件)
-     * @param
      * @return 返回类型 void
-     * @throws
      */
     public void processSelectedKeys() {
         for (Iterator it = selector.selectedKeys().iterator(); it.hasNext();) {
@@ -153,9 +149,7 @@ public class PingClient {
      *
      * @Title: receiveTarget
      * @Description:(接受用户输入的域名，向targets队列中加入任务，主线程会调用该方法)
-     * @param
      * @return 返回类型  void
-     * @throws
      */
     public void receiveTarget(){
         try {

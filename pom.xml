@@ -56,11 +56,6 @@
             <version>${junit.version}</version>
             <!-- 打包时不使用 <scope>test</scope> -->
         </dependency>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty</artifactId>
-            <version>4.0.0.Alpha8</version>
-        </dependency>
     </dependencies>
 
 </project>

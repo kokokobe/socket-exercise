@@ -1,12 +1,10 @@
 package com.liang.netty.handler;
 
 import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
 import io.netty.util.ReferenceCountUtil;
-
-import java.net.SocketAddress;
 
 /**
  * @author BriLiang(liangwen.liang@vipshop.com)
@@ -14,7 +12,7 @@ import java.net.SocketAddress;
  * @date 2014/5/22.
  */
 @Sharable
-public class NettyServerOutboundHandler extends ChannelOutboundHandlerAdapter {
+public class NettyServerOutboundHandler extends ChannelHandlerAdapter {
     @Override
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
         ctx.writeAndFlush(msg);

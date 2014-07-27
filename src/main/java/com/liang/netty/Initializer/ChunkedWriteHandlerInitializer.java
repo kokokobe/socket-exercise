@@ -26,7 +26,7 @@ public class ChunkedWriteHandlerInitializer extends ChannelInitializer<Channel> 
         pipeline.addLast(new WriteStreamHandler());
     }
 
-    private class WriteStreamHandler extends ChannelInboundHandlerAdapter {
+    private class WriteStreamHandler extends ChannelHandlerAdapter {
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
             super.channelActive(ctx);
