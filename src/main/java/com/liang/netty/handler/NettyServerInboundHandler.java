@@ -8,7 +8,6 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-
 import java.net.InetAddress;
 import java.nio.charset.Charset;
 
