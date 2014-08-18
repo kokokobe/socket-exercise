@@ -56,6 +56,12 @@
             <version>${junit.version}</version>
             <!-- 打包时不使用 <scope>test</scope> -->
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty.npn</groupId>
+            <artifactId>npn-api</artifactId>
+            <version>8.1.2.v20120308</version>
+        </dependency>
+
     </dependencies>
 
 </project>

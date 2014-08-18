@@ -61,4 +61,9 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
         cause.printStackTrace();
         ctx.close();
     }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        super.channelRead(ctx, msg);
+    }
 }
