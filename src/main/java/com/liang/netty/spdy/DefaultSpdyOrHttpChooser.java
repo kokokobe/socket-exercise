@@ -14,7 +14,7 @@ import javax.net.ssl.SSLEngine;
  * Description:(判断逻辑,判断HTTP or spdy protocols)
  */
 public class DefaultSpdyOrHttpChooser extends SpdyOrHttpChooser{
-    protected DefaultSpdyOrHttpChooser(int maxSpdyContentLength, int maxHttpContentLength) {
+    public DefaultSpdyOrHttpChooser(int maxSpdyContentLength, int maxHttpContentLength) {
         super(maxSpdyContentLength, maxHttpContentLength);
     }
 
