@@ -1,5 +1,7 @@
 package com.liang.netty.handler;
 
+import java.util.List;
+
 /**
  * @author BriLiang(liangwen.liang@vipshop.com)
  * @date 2014/8/18.
