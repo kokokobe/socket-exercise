@@ -50,10 +50,8 @@ public class SpdyServer {
         int port = Integer.parseInt(args[0]);
         SSLContext mainContext = null;
         try {
-            mainContext = SSLContext.getInstance("SSL", "SunJSSE");
+            mainContext = SSLContext.getDefault();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchProviderException e) {
             e.printStackTrace();
         }
         final SpdyServer server = new SpdyServer(mainContext);

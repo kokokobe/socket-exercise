@@ -49,6 +49,12 @@
             <artifactId>netty-all</artifactId>
             <version>${netty.version}</version>
         </dependency>
+        <!--zookeeper client-->
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.6</version>
+        </dependency>
         <!-- junit 4 -->
         <dependency>
             <groupId>junit</groupId>
