@@ -18,6 +18,6 @@ public class WebSocketServerInitializer extends ChannelInitializer<Channel> {
 
     @Override
     protected void initChannel(Channel ch) throws Exception {
-        ch.pipeline().addLast(new HttpServerCodec(), new HttpObjectAggregator(65536), new WebSocketServerProtocolHandler("/websocket"), new TextFrameInboundHandler(), new BinaryFrameHandler(), new ContinuationFrameHandler());
+        ch.pipeline().addLast(new HttpServerCodec(), new HttpObjectAggregator(65536), new WebSocketServerProtocolHandler("/ws"), new TextFrameInboundHandler(), new BinaryFrameHandler(), new ContinuationFrameHandler());
     }
 }

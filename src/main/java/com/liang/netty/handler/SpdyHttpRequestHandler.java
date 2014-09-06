@@ -12,7 +12,7 @@ import io.netty.util.CharsetUtil;
  * @date 2014/8/18.
  * Description:(处理SPDY 协议的http请求)
  */
-public class SPDYHttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
+public class SpdyHttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     @Override
     protected void messageReceived(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         if (HttpHeaders.is100ContinueExpected(request)) {

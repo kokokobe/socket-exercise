@@ -1,7 +1,7 @@
 package com.liang.netty.spdy;
 
-import com.liang.netty.handler.SPDYHttpRequestHandler;
-import com.liang.netty.handler.SPDYRequestHandler;
+import com.liang.netty.handler.SpdyHttpRequestHandler;
+import com.liang.netty.handler.SpdyRequestHandler;
 import io.netty.channel.ChannelHandler;
 import io.netty.handler.codec.spdy.SpdyOrHttpChooser;
 import org.eclipse.jetty.npn.NextProtoNego;
@@ -35,11 +35,11 @@ public class DefaultSpdyOrHttpChooser extends SpdyOrHttpChooser{
 
     @Override
     protected ChannelHandler createHttpRequestHandlerForHttp() {
-        return new SPDYHttpRequestHandler();
+        return new SpdyHttpRequestHandler();
     }
 
     @Override
     protected ChannelHandler createHttpRequestHandlerForSpdy() {
-        return new SPDYRequestHandler();
+        return new SpdyRequestHandler();
     }
 }
