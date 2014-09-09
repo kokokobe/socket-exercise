@@ -39,6 +39,7 @@ public class PathCacheExample {
         // More scaffolding that does a simple command line processor
         printHelp();
         List<ExampleServer> servers= Lists.newArrayList();
+
     }
 
     private static void printHelp() {
