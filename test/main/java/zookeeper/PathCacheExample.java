@@ -1,11 +1,14 @@
 package zookeeper;
 
+import com.google.common.collect.Lists;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.PathChildrenCache;
 import org.apache.curator.retry.BoundedExponentialBackoffRetry;
 import org.apache.curator.test.TestingServer;
 import org.apache.curator.utils.CloseableUtils;
+
+import java.util.List;
 
 /**
  * @author BriLiang(liangwen.liang@vipshop.com)
@@ -33,6 +36,12 @@ public class PathCacheExample {
     }
 
     private static void processCommands(CuratorFramework client, PathChildrenCache cache) {
+        // More scaffolding that does a simple command line processor
+        printHelp();
+        List<ExampleServer> servers= Lists.newArrayList();
+    }
+
+    private static void printHelp() {
 
     }
 
