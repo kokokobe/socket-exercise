@@ -4,9 +4,11 @@ import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.data.Stat;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.SimpleTimeZone;
 
 /**
  * @author BriLiang(liangwen.liang@vipshop.com)
@@ -18,7 +20,7 @@ public class zookeeperTest1 {
     private static Integer server1ClientPort = 2181;
     private static Integer server2ClientPort = 2182;
     private static Integer server3ClientPort = 2183;
-
+    ZooKeeper zooKeeper;
     @Test
     public void test1() {
         // 创建一个与服务器的连接
@@ -53,4 +55,25 @@ public class zookeeperTest1 {
             e.printStackTrace();
         }
     }
+    @Test
+    public void zookeeperAuth(){
+        try {
+            zooKeeper=new ZooKeeper("localhost:" + server2ClientPort,1000000,null);
+            String authType="digest";
+            String auth="joey:some";
+            String p="/acl_digest";
+            zooKeeper.addAuthInfo(authType,auth.getBytes());
+            zooKeeper.create(p, "hello".getBytes(), ZooDefs.Ids.CREATOR_ALL_ACL, CreateMode.PERSISTENT);
+            Stat stat=new Stat();
+            System.out.println(new String(zooKeeper.getData(p,false,stat)));
+            zooKeeper.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (KeeperException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
