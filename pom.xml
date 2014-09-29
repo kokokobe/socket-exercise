@@ -11,7 +11,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>4.8.2</junit.version>
         <netty.version>5.0.0.Alpha1</netty.version>
+        <apache.curtor>2.6.0</apache.curtor>
 	</properties>
+
 	<build>
 		<finalName>socket-exercise</finalName>
 		<plugins>
@@ -53,9 +55,18 @@
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-recipes</artifactId>
-            <version>2.6.0</version>
+            <version>${apache.curtor}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-test</artifactId>
+            <version>${apache.curtor}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-x-discovery</artifactId>
+            <version>${apache.curtor}</version>
+        </dependency>
 
         <!-- junit 4 -->
         <dependency>
