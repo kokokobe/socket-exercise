@@ -18,8 +18,22 @@ public class Executor implements Watcher, Runnable, DataMonitor.DataMonitorListe
     private final ZooKeeper zk;
     private final DataMonitor dm;
     private Process child;
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
+        if (args.length < 4) {
+            System.err.println("USAGE: Executor hostPort znode filename program [args ...]");
+            System.exit(2);
+        }
+        String hostPort = args[0];
+        String znode = args[1];
+        String filename = args[2];
+        String exec[] = new String[args.length - 3];
+        System.arraycopy(args, 3, exec, 0, exec.length);
+        try {
+            new Executor(hostPort, znode, filename, exec).run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Executor(String hostAndPort, String znode, String fileName, String[] exec) throws IOException {
@@ -50,8 +64,8 @@ public class Executor implements Watcher, Runnable, DataMonitor.DataMonitorListe
 
     @Override
     public void exists(byte[] data) {
-        if(data==null){
-            if(child!=null){
+        if (data == null) {
+            if (child != null) {
                 System.out.println("Killing process");
                 child.destroy();
                 try {
@@ -60,8 +74,8 @@ public class Executor implements Watcher, Runnable, DataMonitor.DataMonitorListe
                     e.printStackTrace();
                 }
             }
-        }else {
-            if(child!=null){
+        } else {
+            if (child != null) {
                 System.out.println("Stopping child");
                 child.destroy();
                 try {
@@ -71,7 +85,7 @@ public class Executor implements Watcher, Runnable, DataMonitor.DataMonitorListe
                 }
             }
             try {
-                FileOutputStream outputStream=new FileOutputStream(fileName);
+                FileOutputStream outputStream = new FileOutputStream(fileName);
                 outputStream.write(data);
                 outputStream.close();
             } catch (FileNotFoundException e) {
@@ -81,9 +95,9 @@ public class Executor implements Watcher, Runnable, DataMonitor.DataMonitorListe
             }
             try {
                 System.out.println("Starting child");
-                child= Runtime.getRuntime().exec(exec);
-                new StreamWriter(child.getInputStream(),System.out);
-                new StreamWriter(child.getErrorStream(),System.err);
+                child = Runtime.getRuntime().exec(exec);
+                new StreamWriter(child.getInputStream(), System.out);
+                new StreamWriter(child.getErrorStream(), System.err);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -92,25 +106,28 @@ public class Executor implements Watcher, Runnable, DataMonitor.DataMonitorListe
 
     @Override
     public void closing(int rc) {
-        synchronized (this){
+        synchronized (this) {
             notifyAll();
         }
     }
-    class StreamWriter extends Thread{
+
+    class StreamWriter extends Thread {
         OutputStream os;
         InputStream in;
-        public StreamWriter(InputStream in,OutputStream os){
-            this.in=in;
-            this.os=os;
+
+        public StreamWriter(InputStream in, OutputStream os) {
+            this.in = in;
+            this.os = os;
             start();
         }
+
         @Override
         public void run() {
-            byte[] b=new byte[80];
+            byte[] b = new byte[80];
             int rc;
             try {
-                while((rc=in.read(b))>0){
-                    os.write(b,0,rc);
+                while ((rc = in.read(b)) > 0) {
+                    os.write(b, 0, rc);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

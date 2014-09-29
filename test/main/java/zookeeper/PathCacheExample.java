@@ -12,7 +12,6 @@ import org.apache.curator.utils.ZKPaths;
 import org.apache.zookeeper.KeeperException;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
@@ -30,8 +29,8 @@ public class PathCacheExample {
 
     public static void main(String[] args) throws Exception {
         TestingServer server=new TestingServer();
-        CuratorFramework client=null;
-        PathChildrenCache cache=null;
+        CuratorFramework client;
+        PathChildrenCache cache;
         client=CuratorFrameworkFactory.newClient(server.getConnectString(),new BoundedExponentialBackoffRetry(1000,1000,3));
         client.start();
         // in this example we will cache data. Notice that this is optional.
@@ -77,9 +76,7 @@ public class PathCacheExample {
             /*just to allow the console output to catch up*/
             TimeUnit.MILLISECONDS.sleep(1000);
         }
-        for(ExampleServer server:servers){
-            CloseableUtils.closeQuietly(server);
-        }
+        servers.forEach(CloseableUtils::closeQuietly);
     }
 
     private static void list(PathChildrenCache cache) {
@@ -102,8 +99,6 @@ public class PathCacheExample {
         String path=ZKPaths.makePath(PATH,name);
         try {
             client.delete().forPath(path);
-        } catch (KeeperException.NoNodeException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

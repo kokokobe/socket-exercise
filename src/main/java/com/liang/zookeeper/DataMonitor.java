@@ -1,10 +1,9 @@
 package com.liang.zookeeper;
 
-import org.apache.zookeeper.AsyncCallback;
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
-import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;
+
+import java.util.Arrays;
 
 /**
  * @author Briliang
@@ -13,9 +12,9 @@ import org.apache.zookeeper.data.Stat;
  */
 public class DataMonitor implements Watcher,AsyncCallback.StatCallback {
     private ZooKeeper zk;
-    private boolean dead;
     private String znode;
     private Watcher chainedWatcher;
+    boolean dead;
     DataMonitorListener listener;
     private byte[] prevData;
 
@@ -31,13 +30,62 @@ public class DataMonitor implements Watcher,AsyncCallback.StatCallback {
 
     public void process(WatchedEvent event) {
         String path=event.getPath();
+        if(event.getType()==Event.EventType.None){
+            // We are are being told that the state of the
+            // connection has changed
+            switch (event.getState()){
+                case SyncConnected:
+                    // In this particular example we don't need to do anything
+                    // here - watches are automatically re-registered with
+                    // server and any watches triggered while the client was
+                    // disconnected will be delivered (in order of course)
+                    break;
+                case Expired:
+                    /*It's all over*/
+                    dead=true;
+                    listener.closing(KeeperException.Code.SessionExpired);
+                    break;
+            }
+        }else {
+            if(path!=null&&path.equals(znode)){
+                /*Something has changed on the node, let's find out*/
+                zk.exists(znode,true,this,null);
+            }
+        }
     }
 
     @Override
     public void processResult(int rc, String path, Object ctx, Stat stat) {
-
+        boolean exists;
+        switch (rc){
+            case KeeperException.Code.Ok:exists=true;break;
+            case KeeperException.Code.NoNode:exists=false;break;
+            case KeeperException.Code.SessionExpired:
+            case KeeperException.Code.NoAuth:dead=true;listener.closing(rc);
+            default:
+                /*retry error*/
+                zk.exists(znode,true,this,null);
+                return;
+        }
+        byte[] b=null;
+        if(exists){
+            try {
+                b=zk.getData(znode,false,null);
+            } catch (KeeperException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+        if((b==null&&b!=prevData)||(b!=null&& Arrays.equals(prevData,b))){
+            listener.equals(b);
+            prevData=b;
+        }
     }
-
+    /**
+     * Other classes use the DataMonitor by implementing this method
+     */
     public interface DataMonitorListener {
         /**
          * The existence status of the node has changed.
