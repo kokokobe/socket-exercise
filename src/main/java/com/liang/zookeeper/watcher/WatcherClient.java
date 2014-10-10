@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class WatcherClient implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(WatcherClient.class);
-    public static final int CLIENT_PORT = 6150;
+    public static final int CLIENT_PORT = 2181;
     /*所要监控的结点*/
     public static final String PATH = "/app1";
     /*所要监控的结点的子结点列表*/
