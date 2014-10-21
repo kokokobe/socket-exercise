@@ -31,11 +31,26 @@ public class WatcherClient implements Runnable {
                 zk.exists(PATH, watcherForNode);
             } catch (KeeperException | InterruptedException e) {
                 e.printStackTrace();
+                try {
+                    zk.close();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+                try {
+                    zk = new ZooKeeper("localhost:" + CLIENT_PORT, 21810, watcherForNode);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
             try {
                 nodeList = zk.getChildren(PATH, watcherForNode);
             } catch (KeeperException | InterruptedException e) {
                 e.printStackTrace();
+                try {
+                    zk = new ZooKeeper("localhost:" + CLIENT_PORT, 21810, watcherForNode);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
             /*对PATH下的每个结点都设置一个watcher*/
             for (String nodeName : nodeList) {

@@ -32,6 +32,10 @@ public class WatcherForNode implements Watcher {
             log.info("Node created:"+event.getPath());
             System.out.println("Node created:"+event.getPath());
         }
+        if(event.getType()== Event.EventType.NodeChildrenChanged){
+            log.info("Node children changed:"+event.getPath());
+            System.out.println("Node children changed:"+event.getPath());
+        }
         /*获取更新后的NodeList*/
         List<String> nodeListNow = null;
         try {
