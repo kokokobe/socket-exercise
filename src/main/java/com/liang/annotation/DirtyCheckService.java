@@ -7,6 +7,9 @@
 
 package com.liang.annotation;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 /**
  * @author BriLiang(liangwen.liang@vipshop.com)
  * @date 2014/11/14.
@@ -19,10 +22,14 @@ public class DirtyCheckService {
     }
     @RequestMapping(value = "/user",method = RequestMethod.GET,produces = "application/json")
     protected String getStartupMethod(String defaultValue){
+        System.out.println("invoke data : "+defaultValue);
         return "data:[] "+defaultValue;
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException, InstantiationException {
         DirtyCheck.DirtyChecker dirtyChecker=new DirtyCheck.DirtyChecker();
-        System.out.printf("process the dirty checker return: "+dirtyChecker.process(new DirtyCheckService()));
+        System.out.println("process the dirty checker return: "+dirtyChecker.process(new DirtyCheckService()));
+        /*初始化时加载所有的 class method seem to spring component scan*/
+        Method method=new HttpUrlResolver(DirtyCheckService.class.getDeclaredMethods()).resolveHrlToAnnotateMethod("/user");
+        method.invoke(method.getDeclaringClass().newInstance(),"BriLiang resolver");
     }
 }
