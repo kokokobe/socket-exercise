@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:liang="http://www.BriLiang/schema/hello" targetNamespace="http://www.BriLiang/schema/hello"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="lastName" type="xsd:string"/>
+
+    <xsd:element name="age">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:integer">
+                <xsd:maxInclusive value="120"/>
+                <xsd:minInclusive value="0"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:element>
+
+    <xsd:element name="dateBorn" type="xsd:date"/>
+
+    <xsd:attribute name="lang" type="xsd:string" default="CN"/>
+
+    <xsd:element name="color" type="xsd:string" default="red"/>
+
+
+    <xsd:element name="car" type="carType">
+
+    </xsd:element>
+
+    <xsd:simpleType name="carType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Audi"/>
+            <xsd:enumeration value="Golf"/>
+            <xsd:enumeration value="BMW"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:element name="letter" type="letterType"/>
+
+    <xsd:simpleType name="letterType">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="([a-z])*"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:element name="address">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+                <xsd:whiteSpace value="replace"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:element>
+    <!--复合元素例子-->
+    <xsd:element name="employee" type="liang:fullPersonInfo">
+
+    </xsd:element>
+    <xsd:complexType name="personInfo">
+        <xsd:annotation>
+            <xsd:documentation>
+                <![CDATA[
+	                    employee explain
+					]]>
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="firstName" type="xsd:string"/>
+            <xsd:element name="lastName" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="fullPersonInfo">
+        <xsd:complexContent>
+            <xsd:extension base="liang:personInfo">
+                <xsd:sequence>
+                    <xsd:element name="address" type="xsd:string"/>
+                    <xsd:element name="city" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <!--例子-->
+    <liang:car>BMW</liang:car>
+    <letter>?</letter>
+    <liang:employee>
+        <liang:firstName>newPerson1</liang:firstName>
+        <liang:lastName>newPerson2</liang:lastName>
+    </liang:employee>
+</xsd:schema>
