@@ -24,11 +24,4 @@ public @interface RequestMapping {
     String[] headers() default {};
     String[] consumes() default {};
     String[] produces() default {};
-
-    /**
-     * 处理解析注释
-     */
-    final class RequestMappingBuilder{
-
-    }
 }
