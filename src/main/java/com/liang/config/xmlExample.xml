@@ -15,6 +15,13 @@
     <city>您好</city>
     <city>您好</city><city>您好</city><city>您好</city>
     <country default="a"></country>
-
+    <anyOne>
+        <firstOne>BriLiang</firstOne>
+        <secondOne>wenliang</secondOne>
+        <car></car>
+        <children>
+            <childname>您好</childname>
+        </children>
+    </anyOne>
 </employee>
 

@@ -2,7 +2,6 @@
 <xsd:schema xmlns:liang="http://www.BriLiang/schema/hello" targetNamespace="http://www.BriLiang/schema/hello"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
-    <xsd:element name="lastName" type="xsd:string"/>
 
     <xsd:element name="age">
         <xsd:simpleType>
@@ -12,13 +11,6 @@
             </xsd:restriction>
         </xsd:simpleType>
     </xsd:element>
-
-    <xsd:element name="dateBorn" type="xsd:date"/>
-
-    <xsd:attribute name="lang" type="xsd:string" default="CN"/>
-
-    <xsd:element name="color" type="xsd:string" default="red"/>
-
 
     <xsd:element name="car" type="carType">
 
@@ -46,6 +38,7 @@
             </xsd:restriction>
         </xsd:simpleType>
     </xsd:element>
+
     <!--复合元素例子-->
     <xsd:element name="employee" type="liang:fullPersonInfo">
 
@@ -63,6 +56,10 @@
             </xsd:element>
             <xsd:element name="lastName" type="xsd:string"/>
         </xsd:sequence>
+        <xsd:attributeGroup ref="liang:personInfoAttr"/>
+    </xsd:complexType>
+
+    <xsd:attributeGroup name="personInfoAttr">
         <xsd:attribute name="fistNameDetail" type="xsd:string">
             <xsd:annotation>
                 <xsd:documentation>
@@ -77,20 +74,28 @@
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
-    </xsd:complexType>
+    </xsd:attributeGroup>
 
     <xsd:complexType name="fullPersonInfo">
         <xsd:complexContent>
             <xsd:extension base="liang:personInfo">
                 <xsd:sequence>
-                    <xsd:element ref="liang:shoesize"/>
-                    <xsd:element name="address" type="xsd:string" minOccurs="0" maxOccurs="2"/>
-                    <xsd:element name="city" type="xsd:string" maxOccurs="unbounded"/>
-                    <xsd:element name="country" type="liang:country"/>
+                    <xsd:group ref="liang:personGroup"/>
                 </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
+
+    <xsd:group name="personGroup">
+        <xsd:sequence>
+            <xsd:element ref="liang:shoesize"/>
+            <xsd:element name="address" type="xsd:string" minOccurs="0" maxOccurs="2"/>
+            <xsd:element name="city" type="xsd:string" maxOccurs="unbounded"/>
+            <xsd:element name="country" type="liang:country"/>
+            <xsd:element ref="liang:anyOne"/>
+        </xsd:sequence>
+    </xsd:group>
+
     <!--定义country的正则表达式-->
     <xsd:complexType name="country">
         <xsd:attribute name="default">
@@ -122,5 +127,23 @@
         </xsd:complexType>
     </xsd:element>
 
+    <!--<any> 元素使我们有能力通过未被 schema 规定的元素来拓展 XML 文档！-->
+    <xsd:element name="anyOne">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="firstOne" type="xsd:string"/>
+                <xsd:element name="secondOne" type="xsd:string"/>
+                <xsd:any minOccurs="0" maxOccurs="2"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="children">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="childname" type="xsd:string" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
 
 </xsd:schema>
