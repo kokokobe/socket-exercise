@@ -59,27 +59,68 @@
             </xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
-            <xsd:element name="firstName" type="xsd:string"/>
+            <xsd:element name="firstName" type="xsd:string">
+            </xsd:element>
             <xsd:element name="lastName" type="xsd:string"/>
         </xsd:sequence>
+        <xsd:attribute name="fistNameDetail" type="xsd:string">
+            <xsd:annotation>
+                <xsd:documentation>
+                    <![CDATA[employee explain default pattern]]>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="default" type="xsd:string">
+            <xsd:annotation>
+                <xsd:documentation>
+                    <![CDATA[employee explain default pattern]]>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
     </xsd:complexType>
 
     <xsd:complexType name="fullPersonInfo">
         <xsd:complexContent>
             <xsd:extension base="liang:personInfo">
                 <xsd:sequence>
-                    <xsd:element name="address" type="xsd:string"/>
-                    <xsd:element name="city" type="xsd:string"/>
+                    <xsd:element ref="liang:shoesize"/>
+                    <xsd:element name="address" type="xsd:string" minOccurs="0" maxOccurs="2"/>
+                    <xsd:element name="city" type="xsd:string" maxOccurs="unbounded"/>
+                    <xsd:element name="country" type="liang:country"/>
                 </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
+    <!--定义country的正则表达式-->
+    <xsd:complexType name="country">
+        <xsd:attribute name="default">
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="[a-z]"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+        </xsd:attribute>
+    </xsd:complexType>
 
-    <!--例子-->
-    <liang:car>BMW</liang:car>
-    <letter>?</letter>
-    <liang:employee>
-        <liang:firstName>newPerson1</liang:firstName>
-        <liang:lastName>newPerson2</liang:lastName>
-    </liang:employee>
+    <!--"shoesize"，其中仅包含文本：-->
+    <xsd:element name="shoesize">
+        <xsd:complexType>
+            <xsd:simpleContent>
+                <xsd:extension base="xsd:decimal">
+                    <xsd:attribute name="sizing">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="US"/>
+                                <xsd:enumeration value="European"/>
+                                <xsd:enumeration value="UK"/>
+                                <xsd:enumeration value="Japan"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:attribute>
+                </xsd:extension>
+            </xsd:simpleContent>
+        </xsd:complexType>
+    </xsd:element>
+
+
 </xsd:schema>

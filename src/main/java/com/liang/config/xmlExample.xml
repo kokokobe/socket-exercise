@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+~ Copyright (c) BriLiang All rights reserved.
+~ File create : 14-11-19 上午10:27
+~ Project Name: socket-exercise
+~ File Name: xmlExample.xml
+-->
+<employee default="null" xmlns="http://www.BriLiang/schema/hello" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="">
+    <firstName>BriLiang</firstName>
+    <lastName>wenLiang</lastName>
+    <shoesize sizing="European">8.5</shoesize>
+    <address>ninhao</address>
+    <address>高端</address>
+    <city>您好</city>
+    <city>您好</city><city>您好</city><city>您好</city>
+    <country default="a"></country>
+
+</employee>
+
