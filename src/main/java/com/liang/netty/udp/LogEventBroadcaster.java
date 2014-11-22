@@ -7,7 +7,7 @@
 
 package com.liang.netty.udp;
 
-import com.liang.netty.encoder.LogEventEncoder;
+import com.liang.netty.codecs.LogEventCodec;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelOption;
@@ -16,7 +16,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.InetSocketAddress;
@@ -35,7 +34,7 @@ public class LogEventBroadcaster {
     public LogEventBroadcaster(InetSocketAddress socketAddress, File file) {
         this.eventLoopGroup = new NioEventLoopGroup();
         this.bootstrap = new Bootstrap().group(eventLoopGroup).channel(NioDatagramChannel.class)
-                .option(ChannelOption.SO_BROADCAST, true).handler(new LogEventEncoder(socketAddress));
+                .option(ChannelOption.SO_BROADCAST, true).handler(new LogEventCodec(socketAddress));
         this.file = file;
     }
 
@@ -74,7 +73,7 @@ public class LogEventBroadcaster {
 
     public static void main(String[] args) {
         String filePath = "C:\\Users\\lwl\\.IntelliJIdea14\\system\\tomcat\\Unnamed_vips-mobile-operation\\logs\\catalina.2014-11-11.log";
-        LogEventBroadcaster broadcaster = new LogEventBroadcaster(new InetSocketAddress("255.255.255.255", 1036), new File(filePath));
+        LogEventBroadcaster broadcaster = new LogEventBroadcaster(new InetSocketAddress("255.255.255.255", 9090), new File(filePath));
         try {
             broadcaster.run();
         } catch (IOException e) {

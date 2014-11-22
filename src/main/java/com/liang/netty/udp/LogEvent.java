@@ -15,7 +15,7 @@ import java.net.InetSocketAddress;
  * Description:()
  */
 public class LogEvent {
-    public static final byte SEPARATOR = (byte) ':';
+    public static final byte SEPARATOR = (byte) '&';
     private final InetSocketAddress source;
     private final String logFile;
     private final String msg;
