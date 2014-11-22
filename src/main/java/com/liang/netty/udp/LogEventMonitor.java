@@ -13,7 +13,10 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioDatagramChannel;
+
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 
 /**
  * @author BriLiang(liangwen.liang@vipshop.com)
@@ -46,7 +49,7 @@ public class LogEventMonitor {
         eventLoopGroup.shutdownGracefully();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnknownHostException {
         LogEventMonitor monitor = new LogEventMonitor(new InetSocketAddress(9090));
         Channel channel = monitor.bind();
         System.out.println("LogEventMonitor running");

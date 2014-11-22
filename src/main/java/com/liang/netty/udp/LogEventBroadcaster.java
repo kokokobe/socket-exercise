@@ -18,7 +18,9 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -53,7 +55,7 @@ public class LogEventBroadcaster {
                 randomAccessFile.seek(pointer);
                 String line;
                 while ((line = randomAccessFile.readLine()) != null) {
-                    channel.write(new LogEvent(null, -1, file.getAbsolutePath(), line));
+                    channel.writeAndFlush(new LogEvent(null, -1, file.getAbsolutePath(), line));
                 }
                 pointer = randomAccessFile.getFilePointer();
                 randomAccessFile.close();
@@ -71,9 +73,9 @@ public class LogEventBroadcaster {
         eventLoopGroup.shutdownGracefully();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnknownHostException {
         String filePath = "C:\\Users\\lwl\\.IntelliJIdea14\\system\\tomcat\\Unnamed_vips-mobile-operation\\logs\\catalina.2014-11-11.log";
-        LogEventBroadcaster broadcaster = new LogEventBroadcaster(new InetSocketAddress("255.255.255.255", 9090), new File(filePath));
+        LogEventBroadcaster broadcaster = new LogEventBroadcaster(new InetSocketAddress(InetAddress.getLocalHost(), 9090), new File(filePath));
         try {
             broadcaster.run();
         } catch (IOException e) {
