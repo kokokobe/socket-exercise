@@ -18,7 +18,7 @@ import java.util.Random;
 public class MemcachedRequest {
     private static final Random rand = new Random();
     /*fixed so hard coded*/
-    private int magic = 0x80;
+    private int magic = 0x80 ;
     /*the operation code*/
     private byte opCode ;
     private String key;
