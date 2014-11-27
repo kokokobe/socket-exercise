@@ -24,7 +24,7 @@ public class NettyEchoServer {
     }
 
     public void start() {
-        EventLoopGroup group = new NioEventLoopGroup();
+        EventLoopGroup group = new NioEventLoopGroup(4);
         try {
             ServerBootstrap bootStrap = new ServerBootstrap();
             bootStrap.group(group).channel(NioServerSocketChannel.class).localAddress(new InetSocketAddress(port))
