@@ -3,6 +3,7 @@ package com.liang.netty.server;
 import com.liang.netty.Initializer.ServerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -24,11 +25,13 @@ public class NettyEchoServer {
     }
 
     public void start() {
-        EventLoopGroup group = new NioEventLoopGroup(4);
+        EventLoopGroup bossGroup = new NioEventLoopGroup(4);
+        EventLoopGroup workerGroup = new NioEventLoopGroup(4);
         try {
             ServerBootstrap bootStrap = new ServerBootstrap();
-            bootStrap.group(group).channel(NioServerSocketChannel.class).localAddress(new InetSocketAddress(port))
-                    .childHandler(new ServerInitializer());
+            bootStrap.group(bossGroup,workerGroup).channel(NioServerSocketChannel.class).localAddress(new InetSocketAddress(port))
+                    .childHandler(new ServerInitializer()).childOption(ChannelOption.SO_KEEPALIVE, true)
+                    .childOption(ChannelOption.CONNECT_TIMEOUT_MILLIS,2000);
             ChannelFuture future = bootStrap.bind().sync();
             System.out.println(NettyEchoServer.class.getSimpleName() + " started and listen on " + future.channel().localAddress());
             future.channel().closeFuture().sync();
@@ -36,7 +39,8 @@ public class NettyEchoServer {
             e.printStackTrace();
         } finally {
             try {
-                group.shutdownGracefully().sync();
+                bossGroup.shutdownGracefully().sync();
+                workerGroup.shutdownGracefully().sync();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -49,7 +53,7 @@ public class NettyEchoServer {
         if (args.length != 1) {
             System.err.println("Usage: " + NettyEchoServer.class.getSimpleName() + " <port>");
         }
-        int port = Integer.parseInt(args[0]);
+        int port = 8080;
         new NettyEchoServer(port).start();
     }
 }
