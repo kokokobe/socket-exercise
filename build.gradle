@@ -1,0 +1,58 @@
+group="com.briliang"
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    repositories {
+        mavenCentral()
+    }
+    ext {
+        nettyVersion = '5.0.0.Alpha1'
+        junitVersion = '4.8.2'
+        curatorVersion = '2.6.0'
+        npnApiVersion = '8.1.2.v20120308'
+    }
+
+    dependencies {
+        compile(
+                "io.netty:netty-all:${nettyVersion}",
+                "org.apache.curator:curator-framework:${curatorVersion}",
+                "org.eclipse.jetty.npn:npn-api:${npnApiVersion}"
+        )
+        testCompile(
+                "junit:junit:${junitVersion}"
+        )
+    }
+}
+
+sourceCompatibility = 1.8
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    jcenter()
+}
+
+jar {
+    baseName = "exercise"
+    manifest {
+        attributes 'Implementation-Title': 'socket exercise',
+                'Implementation-Version': version
+    }
+}
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+        flatDir {
+            dirs 'repos'
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
