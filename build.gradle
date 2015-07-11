@@ -1,9 +1,15 @@
-group="com.briliang"
-
 allprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
+    apply plugin: 'com.google.protobuf'
+    group="com.briliang"
+    sourceCompatibility = 1.8
+    version = "1.0-SNAPSHOT"
     repositories {
+        mavenLocal()
+        maven {
+            url "http://jcenter.bintray.com"
+        }
         mavenCentral()
     }
     ext {
@@ -16,22 +22,35 @@ allprojects {
     dependencies {
         compile(
                 "io.netty:netty-all:${nettyVersion}",
-                "org.apache.curator:curator-framework:${curatorVersion}",
-                "org.eclipse.jetty.npn:npn-api:${npnApiVersion}"
+                "org.apache.curator:curator-framework:${curatorVersion}"
+                , "org.eclipse.jetty.npn:npn-api:${npnApiVersion}"
+                , "io.grpc:grpc-all:0.7.1"
         )
         testCompile(
                 "junit:junit:${junitVersion}"
         )
     }
-}
+    buildscript {
+        repositories {
+            mavenCentral()
+        }
+        dependencies {
+            classpath 'com.google.protobuf:protobuf-gradle-plugin:0.4.1'
+        }
+    }
 
-sourceCompatibility = 1.8
-version = "1.0-SNAPSHOT"
+    sourceSets {
+        main {
+            proto {
+                plugins {
+                    grpc { }
+                }
+            }
+        }
+    }
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-    jcenter()
+    protocDep = "com.google.protobuf:protoc:3.0.0-alpha-3"
+    protobufNativeCodeGenPluginDeps = ["grpc:io.grpc:protoc-gen-grpc-java:0.7.1"]
 }
 
 jar {
@@ -41,6 +60,7 @@ jar {
                 'Implementation-Version': version
     }
 }
+
 test {
     systemProperties 'property': 'value'
 }
@@ -54,5 +74,5 @@ uploadArchives {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '2.4'
 }
